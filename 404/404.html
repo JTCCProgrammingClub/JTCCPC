@@ -1,0 +1,298 @@
+<html>
+	<head>
+		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+		<meta content="utf-8" http-equiv="encoding">
+	</head>
+    <style>
+		body{
+			background:black;
+			width:640px;
+			margin:10px auto;
+			color:white;
+			font-family:monaco;
+			image-rendering: pixelated;
+		}
+		h1{
+			font-size:72px;
+			margin:0px;
+			display:inline-block; 
+		}
+			#title, #directions{
+			text-align:center;
+		}
+		img{
+			vertical-align:middle;
+		}
+		.right{
+			float:right;
+		}
+		canvas{
+			border-radius:5px;
+			border:8px solid blue;
+		}
+    </style>
+    <body>
+		<div id='title'>
+			<img src='tail.png'/>
+			<h1>404</h1>
+			<img src='head.png'/>
+			<p>Sorry, the page you were looking for has never existed or has been deleted.</p>
+		</div>
+		<canvas id='game' width='640' height='480'>
+		</canvas>
+		<p id='info'>Score: <span id='scoreNum'></span>
+			<span class='right'>Hi: <span id='hiNum'></span></span>
+		</p>
+		<p id='directions'><strong>Directions:</strong> Move snek: 
+		(&#8592;&#8593;&#8595;&#8594;)
+		Pause (p) Restart (r)</p>
+			
+	</body>
+    <script>
+	var running;
+	var paused = false;
+	var gameEnd = false;
+
+	//canvas stuff
+    var c
+    var ctx;
+
+	//size of snek's segments
+    var unitSize=16;
+
+	//array that stores snek
+    var grid = [];
+
+    var currDirection = 1;//up = 0, right = 1, down = 2, left = 3
+    var ate = true; 
+
+	//length of snek
+    var length= 5;
+
+    var foodPos = [0,0];
+    var score = length;
+    var time = 0;
+    var initialTime = 0;
+
+	//4 pi's for the width of the page.
+	var interval = (1200/4)/Math.PI;
+
+    if(localStorage.hi == null) localStorage.hi = 0;
+
+	//snek unit management
+
+	function getLastUnit(){
+		return grid[grid.length-1];
+
+	}
+	function getAUnit(length){
+		try{
+			return grid[length];
+			
+		}catch(e){
+			return undefined;
+		}
+
+	}
+	function unitExists(x,y){
+		for(var i = grid.length-1; i>0; i--){
+			if(grid[i][0] == x && grid[i][1] == y){
+				return 1;
+			}
+		}
+		return -1;
+
+	}
+	function unitPos(x,y){
+
+		for(var i = grid.length-1; i>0; i--){
+			if(grid[i][0] == x && grid[i][1] == y){
+				return i;
+			}
+		}
+		return -1;
+
+	}
+	function addUnit(x,y){
+
+		grid.push([x,y]);
+	}
+	function removeUnit(units){
+		//units = # of units to cut off from beginning
+		grid = grid.splice(units);
+	}
+
+	function message(message){
+		 var x = c.width / 2;
+		 var y = c.height / 2;
+		 ctx.font = '30pt Arial';
+		 ctx.textAlign = 'center';
+		 ctx.fillStyle = 'blue';
+		 ctx.fillText(message, x, y);
+	}
+    function scoreSet(){
+		document.getElementById('scoreNum').innerHTML = score;
+		if(length > parseInt(localStorage.hi)){
+			document.getElementById('hiNum').innerHTML = score;
+
+		}
+    }
+   
+    function init(){
+		document.getElementById('hiNum').innerHTML = localStorage.hi;
+		c=document.getElementById('game'); 
+		ctx=c.getContext('2d');
+
+		//create snake
+		for(var i=0; i<length; i++){
+			addUnit(i,0);
+		}
+    }
+    function gameOver(){
+		clearInterval(running);
+		gameEnd = true;
+
+		if(score > parseInt(localStorage.hi)){
+			localStorage.hi = score;
+		
+		}
+		
+		console.log('collision');
+		message('Game over');
+    }
+    function drawFood(x,y){
+		ctx.fillStyle = '#FF0';
+		ctx.fillRect(x*unitSize,y*unitSize,unitSize,unitSize);
+    }
+    function setFood(){
+		if(ate){
+			ate=false;
+			while(true){
+				foodPos[0]=Math.floor(Math.random()*unitSize);
+				foodPos[1]=Math.floor(Math.random()*unitSize);
+				
+				//if food isn't placed over snake, break loop
+				if(unitExists(foodPos[0], foodPos[1]) == -1) break;
+			}
+			initialTime = time;
+		}    
+		drawFood(foodPos[0],foodPos[1]);
+    }
+	function rainbowColor(x,y){
+		var x;
+		var r, g, b;
+		var d = 0;
+
+		d+=.1;
+		var i = time+unitPos(x,y);
+		x = (i/interval)+d;
+		r = Math.floor(((Math.sin(x)*255)+255)/2);
+		g = Math.floor(((Math.sin(x+Math.PI*(2/3))*255)+255)/2);
+		b = Math.floor(((Math.sin(x+(Math.PI*(4/3))*255)+255)/2));
+		return "rgb("+r+","+g+","+b+")";
+	}
+    function drawUnit(x,y){
+		//ctx.fillStyle = '#FFF';
+		ctx.fillStyle = rainbowColor(x,y);
+		ctx.fillRect(x*unitSize,y*unitSize,unitSize,unitSize);
+    }
+    function drawSnek(){
+		for(var i=0; i<grid.length; i++){
+			for(var j=0; j<grid[i].length; j++){
+				 drawUnit(grid[i][0], grid[i][1]);
+			}
+		}
+    }
+    function isCollision(x,y){
+		if(x < 0 || y <0 || x > c.width/unitSize || y > c.height/unitSize) gameOver();
+		if(unitExists(x,y) != -1) gameOver();
+
+		if(unitExists(foodPos[0], foodPos[1]) != -1) ate = true;
+	}
+	function updateTail(){
+		//find new tail
+		//check if on right`
+		if((time - initialTime) > 10){
+			removeUnit(1);
+		}
+		else{
+			score++;
+		}
+    }
+    function updateHead(){
+		length++;
+		switch(currDirection){
+			case 1://right
+			isCollision(getLastUnit()[0]+1,getLastUnit()[1]);
+			addUnit(getLastUnit()[0]+1,getLastUnit()[1]);
+			break;
+			case 2:
+			isCollision(getLastUnit()[0],getLastUnit()[1]+1);
+			addUnit(getLastUnit()[0],getLastUnit()[1]+1);
+			break;
+			case 3:
+			isCollision(getLastUnit()[0]-1,getLastUnit()[1]);
+			addUnit(getLastUnit()[0]-1,getLastUnit()[1]);
+			break;
+			case 4:
+			isCollision(getLastUnit()[0],getLastUnit()[1]-1);
+			addUnit(getLastUnit()[0],getLastUnit()[1]-1);
+		}
+    }
+
+    function run(){
+		time++;
+		ctx.clearRect(0,0,c.width,c.height);
+		scoreSet();
+		drawSnek();
+		updateTail();
+		updateHead();
+		setFood();
+    }
+
+    init();
+
+    //update screen every 75 milliseconds
+    running = setInterval(run, 60);
+
+    //change snake direction with key input and pause play
+    document.addEventListener('keydown', 
+	    function(event){
+			switch(event.keyCode){
+				case 39://right
+					currDirection =1;
+					break;
+				case 40:
+					currDirection =2;
+					break;
+				case 37:
+					currDirection =3;
+					break;
+				case 38:
+					currDirection =4;
+					break;
+				case 80:
+					if(!gameEnd){
+						if(!paused){
+							message('Paused');
+							clearInterval(running);
+							paused=true;
+						}
+						else{
+							running = setInterval(run, 75);
+							paused=false;
+						}
+					}
+					break;
+				case 82:
+					window.location.reload();
+					break;
+				case 13:
+					if(gameEnd){
+						window.location.reload();
+					}
+			}
+		}
+	);
+    </script>
+</html>
