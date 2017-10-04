@@ -1,0 +1,47 @@
+header{
+	
+}
+
+body{
+	padding: 1em;
+}
+
+#banner_id{
+	top: 0;
+	padding: 10px;
+	margin-top: 0;
+	background-color: none;
+}
+
+#banner_txt{
+	color: black;
+	font-size: 2em;
+}
+
+#nav_div{
+	
+}
+
+#nav_menu{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: blue;
+}
+
+li{
+	float: left;
+}
+
+li a {
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 16px;
+	text-decoration: none;
+}
+
+li a:hover {
+	background-color: blueviolet;
+}
