@@ -16,6 +16,7 @@ body{
 #banner_txt{
 	color: black;
 	font-size: 2em;
+	text-decoration: none;
 }
 
 #nav_div{
@@ -43,11 +44,13 @@ li a {
 }
 
 li a:hover {
-	background-color: blueviolet;
+	background-color: #16234A;
+	-webkit-transition: background-color .40s;
+    transition: background-color .40s;
 }
 
 div.gallery {
-    margin: 5px;
+    margin: .33em ;
     border: 1px solid #ccc;
     float: left;
     width: 180px;
@@ -55,10 +58,13 @@ div.gallery {
 
 div.gallery:hover {
     border: 1px solid #777;
+	box-shadow: 0em 0em .5em .2em gray;
+	-webkit-transition: box-shadow .25s;
+    transition: box-shadow .25s;
 }
 
 div.gallery img {
-    width: 100%;
+    width: 180px;
     height: auto;
 }
 
@@ -67,7 +73,11 @@ div.desc {
     text-align: center;
 }
 
-#container {
-	float: center;
-	width: 75%;
+div.container {
+	width: 50%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
 }
