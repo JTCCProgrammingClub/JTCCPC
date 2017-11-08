@@ -1,3 +1,4 @@
+<!doctype html>
 <html>
 	<head>
 		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
@@ -46,43 +47,33 @@
 		<p id='directions'><strong>Directions:</strong> Move snek: 
 		(&#8592;&#8593;&#8595;&#8594;)
 		Pause (p) Restart (r)</p>
-	
-<script type="text/javascript">
+			
+	</body>
+    <script>
 	var running;
 	var paused = false;
 	var gameEnd = false;
-
 	//canvas stuff
     var c
     var ctx;
-
 	//size of snek's segments
     var unitSize=16;
-
 	//array that stores snek
     var grid = [];
-
     var currDirection = 1;//up = 0, right = 1, down = 2, left = 3
     var ate = true; 
-
 	//length of snek
     var length= 5;
-
     var foodPos = [0,0];
     var score = length;
     var time = 0;
     var initialTime = 0;
-
 	//4 pi's for the width of the page.
 	var interval = (1200/4)/Math.PI;
-
     if(localStorage.hi == null) localStorage.hi = 0;
-
 	//snek unit management
-
 	function getLastUnit(){
 		return grid[grid.length-1];
-
 	}
 	function getAUnit(length){
 		try{
@@ -91,7 +82,6 @@
 		}catch(e){
 			return undefined;
 		}
-
 	}
 	function unitExists(x,y){
 		for(var i = grid.length-1; i>0; i--){
@@ -100,27 +90,22 @@
 			}
 		}
 		return -1;
-
 	}
 	function unitPos(x,y){
-
 		for(var i = grid.length-1; i>0; i--){
 			if(grid[i][0] == x && grid[i][1] == y){
 				return i;
 			}
 		}
 		return -1;
-
 	}
 	function addUnit(x,y){
-
 		grid.push([x,y]);
 	}
 	function removeUnit(units){
 		//units = # of units to cut off from beginning
 		grid = grid.splice(units);
 	}
-
 	function message(message){
 		 var x = c.width / 2;
 		 var y = c.height / 2;
@@ -133,7 +118,6 @@
 		document.getElementById('scoreNum').innerHTML = score;
 		if(length > parseInt(localStorage.hi)){
 			document.getElementById('hiNum').innerHTML = score;
-
 		}
     }
    
@@ -141,7 +125,6 @@
 		document.getElementById('hiNum').innerHTML = localStorage.hi;
 		c=document.getElementById('game'); 
 		ctx=c.getContext('2d');
-
 		//create snake
 		for(var i=0; i<length; i++){
 			addUnit(i,0);
@@ -150,7 +133,6 @@
     function gameOver(){
 		clearInterval(running);
 		gameEnd = true;
-
 		if(score > parseInt(localStorage.hi)){
 			localStorage.hi = score;
 		
@@ -181,7 +163,6 @@
 		var x;
 		var r, g, b;
 		var d = 0;
-
 		d+=.1;
 		var i = time+unitPos(x,y);
 		x = (i/interval)+d;
@@ -205,7 +186,6 @@
     function isCollision(x,y){
 		if(x < 0 || y <0 || x > c.width/unitSize || y > c.height/unitSize) gameOver();
 		if(unitExists(x,y) != -1) gameOver();
-
 		if(unitExists(foodPos[0], foodPos[1]) != -1) ate = true;
 	}
 	function updateTail(){
@@ -238,7 +218,6 @@
 			addUnit(getLastUnit()[0],getLastUnit()[1]-1);
 		}
     }
-
     function run(){
 		time++;
 		ctx.clearRect(0,0,c.width,c.height);
@@ -248,31 +227,26 @@
 		updateHead();
 		setFood();
     }
-
     init();
-
     //update screen every 75 milliseconds
     running = setInterval(run, 60);
-
     //change snake direction with key input and pause play
     document.addEventListener('keydown', 
 	    function(event){
-				if(event.keyCode == 39){//right
-					if(currDirection != 3) currDirection =1; 
-				}
-				if(event.keyCode == 40){
-					if(currDirection != 4) currDirection =2;
-					
-				}
-				if(event.keyCode == 37){
-					if(currDirection != 1) currDirection =3;
-					
-				}
-				if(event.keyCode == 38){
-					if(currDirection != 2) currDirection =4;
-					
-				}
-				if(event.keyCode == 80){
+			switch(event.keyCode){
+				case 39://right
+					currDirection =1;
+					break;
+				case 40:
+					currDirection =2;
+					break;
+				case 37:
+					currDirection =3;
+					break;
+				case 38:
+					currDirection =4;
+					break;
+				case 80:
 					if(!gameEnd){
 						if(!paused){
 							message('Paused');
@@ -284,20 +258,16 @@
 							paused=false;
 						}
 					}
-				}
-				if(event.keyCode == 82){
+					break;
+				case 82:
 					window.location.reload();
-					
-				}
-				if(event.keyCode == 13){
+					break;
+				case 13:
 					if(gameEnd){
 						window.location.reload();
 					}
-				}
-
 			}
+		}
 	);
-    </script>	
-	</body>
-    
+    </script>
 </html>

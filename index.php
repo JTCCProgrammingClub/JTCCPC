@@ -3,14 +3,16 @@
 <head>
 	<meta charset="utf-8">
 	<title>JTCCProgrammingClub Website</title>
-	<link href="styles.css" rel="stylesheet" type="text/css">
+	<link href="styles.css" media="all" rel="stylesheet" type="text/css">
 </head>
 
 <body>
+	<div id="header">
 	<?php
-	include_once 'header.php';
+	include_once 'header.html';	
 	?>
-	<div class="main_container">
+	</div>	
+	<div class="container">
 		<h1 style="text-align: center;">This website is currently under construction.</h1>
 		<hr>
 		<h2>About Us</h2>

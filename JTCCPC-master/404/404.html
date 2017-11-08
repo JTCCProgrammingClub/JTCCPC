@@ -46,8 +46,9 @@
 		<p id='directions'><strong>Directions:</strong> Move snek: 
 		(&#8592;&#8593;&#8595;&#8594;)
 		Pause (p) Restart (r)</p>
-	
-<script type="text/javascript">
+			
+	</body>
+    <script>
 	var running;
 	var paused = false;
 	var gameEnd = false;
@@ -257,22 +258,20 @@
     //change snake direction with key input and pause play
     document.addEventListener('keydown', 
 	    function(event){
-				if(event.keyCode == 39){//right
-					if(currDirection != 3) currDirection =1; 
-				}
-				if(event.keyCode == 40){
-					if(currDirection != 4) currDirection =2;
-					
-				}
-				if(event.keyCode == 37){
-					if(currDirection != 1) currDirection =3;
-					
-				}
-				if(event.keyCode == 38){
-					if(currDirection != 2) currDirection =4;
-					
-				}
-				if(event.keyCode == 80){
+			switch(event.keyCode){
+				case 39://right
+					currDirection =1;
+					break;
+				case 40:
+					currDirection =2;
+					break;
+				case 37:
+					currDirection =3;
+					break;
+				case 38:
+					currDirection =4;
+					break;
+				case 80:
 					if(!gameEnd){
 						if(!paused){
 							message('Paused');
@@ -284,20 +283,16 @@
 							paused=false;
 						}
 					}
-				}
-				if(event.keyCode == 82){
+					break;
+				case 82:
 					window.location.reload();
-					
-				}
-				if(event.keyCode == 13){
+					break;
+				case 13:
 					if(gameEnd){
 						window.location.reload();
 					}
-				}
-
 			}
+		}
 	);
-    </script>	
-	</body>
-    
+    </script>
 </html>
