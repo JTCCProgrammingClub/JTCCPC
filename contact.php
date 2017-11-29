@@ -10,7 +10,6 @@
 	<?php
 	include_once 'header.html';
 	?>
-	<h1 style="text-align: center;">This website is currently under construction.</h1>
 	<hr>
 	<p>Sorry, no contact right now!</p>
 	<p></p>

@@ -10,7 +10,7 @@
 	<?php
 	include_once 'header.html';
 	?>
-	<h1 style="text-align: center;">This website is currently under construction.</h1>
+	<hr>
 	<article class="container">
 		<section class="gallery">
 			<a href="drone.html"><img a src="https://i.pinimg.com/736x/8b/04/2e/8b042e06ce942bc1f0c09c323ff5c986--quad-drone-drone-diy.jpg" href=""/>
@@ -61,6 +61,7 @@
 			<div class="desc">Project 12</div></a>
 		</section>
 	</div>
+	<!--Thanks to Adam Blum for the CSS layout.-->
 <div style="text-align: right;position: fixed;z-index:9999999;bottom: 0; width: 100%;cursor: pointer;line-height: 0;"><a title="Hosted on free web hosting 000webhost.com. Host your own website for FREE." target="_blank" href="https://www.000webhost.com/?utm_source=000webhostapp&utm_campaign=000_logo&utm_medium=website_jtccpc&utm_content=footer_img"><img src="https://cloud.githubusercontent.com/assets/23024110/20663010/9968df22-b55e-11e6-941d-edbc894c2b78.png"  alt="www.000webhost.com"></a></div>
 </body>
 </html>

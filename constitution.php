@@ -10,8 +10,7 @@
 	<?php
 	include_once 'header.html';
 	?>
-	<h1 style="text-align: center;">This website is currently under construction.</h1>
 	<hr>
-	<p>The club's constitution will be placed here once it has been approved.</p>
+	<iframe src="https://docs.google.com/a/email.vccs.edu/document/d/1clJcqM2AZm3qC4iMd_rxizy7XZP0lAG3qlhMK94xuO4/edit?usp=sharing" style="height:80em; width: 100%;"/>
 </body>
 </html>
