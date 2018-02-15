@@ -12,7 +12,7 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1
 
 <body>
 	
-	
+	<!-- Website created and managed by Andrew H T-->
 	<div id="header">
 	<?php
 	if(!isset($_COOKIE["visited"])){
@@ -44,7 +44,7 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1
 		<h4>President</h4>
 		<p>&emsp;Tristan F</p>
 		<h4>Vice President</h4>
-		<p>&emsp;Andrew H</p>
+		<p>&emsp;Andrew H T</p>
 		<h4>Secretary</h4>
 		<p>&emsp;Jeremy T</p>
 		<h4>Treasurer</h4>

@@ -5,6 +5,7 @@
 body{
 	padding: .1em 4em;
 	margin: 2em;
+	font-family: Constantia, "Lucida Bright", "DejaVu Serif", Georgia, "serif";
 }
 
 div#sp {
@@ -47,7 +48,6 @@ div#sp div#sp-content {
 	top: 0;
 	padding: 10px;
 	margin-top: 0;
-	background-color: none;
 }
 
 #banner_txt{
@@ -90,15 +90,31 @@ li a:hover {
   box-sizing: border-box !important;
 }
 
+div.proj-container {
+	width: 75%;
+    height: 100%;
+	position: relative;
+    left: 20%;	
+	right: auto;
+    margin: auto;
+	padding: 1em 25em 10em 5em;
+	text-align: left;
+	display: inline-block;
+}
+
+
+
 article.container {
 	-moz-column-width: 13em;
 	-webkit-column-width: 13em;
+	column-width: 13em;
     -moz-column-gap: 1.5em;
 	-webkit-column-gap: 1.5em;
-    width: 50%;
+	column-gap: 1.5em;
+    width: 100%;
 	margin-left: auto;
 	margin-right: auto;
-	padding: 5em 1em;
+	padding: 5em 10em;
 }
 
 section.gallery {
@@ -130,7 +146,7 @@ div.gallery {
     border: 1px solid #ccc;
     float: left;
     width: 180px;
-	
+	text-decoration: none;
 }
 
 div.gallery:hover {
@@ -145,9 +161,14 @@ div.gallery img {
     height: auto;
 }
 
+section a {
+	text-decoration: none;
+}
+
 div.desc {
     padding: 15px;
     text-align: center;
+	text-decoration: none;
 }
 
 div.container {
@@ -160,4 +181,25 @@ div.container {
 	padding: 1em 5em;
 	text-align: left;
 	display: inline-block;
+}
+
+a.gform:link, a.gform:visited {
+	border: 2px solid #8D7BFF;
+	padding: 1em;
+	background-color: white;
+	border-radius: 5px;
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	font-size: 24px;
+	left: 0;
+	right: 0;
+	position: absolute;
+	margin:0;
+}
+
+a.gform:hover, a.gform:active {
+	background-color: aqua;
+	-webkit-transition: background-color .40s;
+    transition: background-color .40s;
 }
